@@ -1,10 +1,10 @@
 <template>
-  <div id="Adicionagem">
-    <div class="card container mt-3">
+  <div  id="Adicionagem" style="margin-top:100px">
+    <div class="card container mt-3" >
       <div class="card-header">
-        <div class="row">
-          <div class="col-sm-8">
-            <h5 class="float-left">Adicionar Viagens</h5>
+        <div class="row" >
+          <div class="col-sm-8" >
+            <h5 class="float-left" >Adicionar Viagens</h5>
           </div>
           <div class="col-sm-4">
             <button class="btn btn-warning float-right" @click="GoBack">

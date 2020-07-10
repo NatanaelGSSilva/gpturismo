@@ -1,44 +1,5 @@
 <template>
 <div>
-<nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
-        <div class="container">
-            <!-- Brand -->
-            <a class="navbar-brand " href="#">
-                <img src="gptur.png" alt="Logo GP" width="60"> Grupo GP
-            </a>
-
-            <!-- Toggler/collapsibe Button -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-            <!-- Navbar links -->
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#sobre">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#demo">Turismo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#depoimentos">Depoimentos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contato">Contato</a>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/login">Login</router-link>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
     <header class="fundo" style="margin-top:80px">
         <div class="fundo2">
             <div class="container" id="sobre">
@@ -51,19 +12,62 @@
                         <br>
                         <p>
                             Com sua sede na rua 31 de Março nº 336. Gp, gerida por seu proprietário Roberti Porto se expande a cada ano que começa. Garantindo uma viagem com conforto e qualidade para seus frequentadores de cursos técnicos e universitários em Pelotas, a GP no ano
-                            passdo deu inicia a essa modalidade com apenas nove passageiros e um carro.
+                            passdo deu inicia a essa modalidade com apenas nove passageiros e um excursao.
                         </p>
 
                     </div>
-                    <div class="col-md-6 mt-5">
-                        <img src="../img/Carro.jpg" alt="BMW antiga" class="img-fluid mt-5 d-none d-md-block">
+                    <div class="col-md-6 ">
+                        <img src="../img/Carro.jpg" alt="onibus" class="img-fluid mt-5 d-none d-md-block">
                     </div>
                 </div>
             </div>
         </div>
+        
     </header>
 
+    <!-- excursoes -->
 
+            
+        <div class="row">
+            
+
+            <div class="container-fluid" style="text-align: center; margin-top: 80px;">
+                <h2>Veja nossas Excursões</h2>
+            <div id="turismo" class="container mx-auto" v-for="excursao in excursoes"  v-bind:key="excursao.id" style="margin-top:30px ">
+                <img @click.prevent="seleciona(excursao.idExcursoes)" :src="excursao.foto" class="mx-2 my-2 float-left" width="260" height="180">  
+            </div>
+            </div>
+        </div>
+
+
+    <!-- viajens 
+          <table class="table table-hover table-sm" >
+            <thead>
+              <tr>
+                <th>Cód.</th>
+                <th>Saida</th>
+                <th>Destino</th>
+                <th>Valor</th>
+                <th>Horário Saída</th>
+                <th>Horário Chegada</th>
+                <th>Tipo Viagem</th>
+                <th>Galeria</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="viagem in viagens" v-bind:key="viagem.id">
+                <td>{{viagem.idViagens}}</td>
+                <td>{{viagem.dataChegada}}</td>
+                <td>{{viagem.dataPartida}}</td>
+                <td>{{viagem.detalheExcursoes}}</td>
+                <td>{{viagem.foto}}</td>
+                <td>{{viagem.horaChegada}}</td>
+                <td>{{viagem.tipoViagem}}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+-->
     <!-- LOCALIZAÇÃO -->
     <section class="bg-secondary text-white mt-3 py-4" id="contato">
         <div class="container">
@@ -88,9 +92,39 @@
     </div>
 </template>
 
-<script>
 
-export default {}
+
+<script>
+import axios from 'axios'
+export default {
+  data() {
+    return {
+      viagens: null,
+      excursoes: null
+    };
+  },
+  mounted() {
+    this.listar();
+  },
+  methods: {
+    listar() {
+      axios
+        .get(this.$MainURL +"/viagens")
+        .then(response => (this.viagens = response.data));
+    axios.get(this.$MainURL +"/excursoes")
+        .then(response => (this.excursoes = response.data));
+    },
+  seleciona(idEx) {
+        this.$router.push({name: "Excursao", params:{id: idEx}})
+    }
+    
+    },
+    filters: {
+        estiloMoeda(value) {
+            return value.toLocaleString('pt-br', {minimumFractionDigits: 2})
+        }
+    }
+}
 </script>
 
 <style scoped>
@@ -108,17 +142,5 @@ export default {}
     height: 100%;
 }
 
-.navbar {
-    box-shadow: 2px 2px 5px #f00;
-    opacity: 0.9;
-    margin-bottom: 4px;
-}
 
-#demo {
-    margin-top: 80px;
-    margin-bottom: 80px;
-    margin-left: 100px;
-    margin-right: 100px;
-    text-align: center;
-}
 </style>

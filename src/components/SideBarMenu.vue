@@ -1,7 +1,42 @@
 <template>
   <div  class="wrapper">
+    <nav id="navhome" class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
+        <div class="container">
+            <!-- Brand -->
+            <a class="navbar-brand " href="#">
+                <img src="gptur.png" alt="Logo GP" width="60"> Grupo GP
+            </a>
+
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/home">Home</router-link>
+                    </li>
+                    <li v-if="!user" class="nav-item">
+                        <a class="nav-link" href="#sobre">Sobre</a>
+                    </li>
+                    <li v-if="!user" class="nav-item">
+                        <a class="nav-link" href="#turismo">Turismo</a>
+                    </li>
+                    <li v-if="!user" class="nav-item">
+                        <a class="nav-link" href="#contato">Contato</a>
+                    </li>
+                    <li v-if="!user" class="nav-item">
+                        <router-link class="nav-link" to="/login">Login</router-link>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <!-- Sidebar  -->
-    <nav v-if="user" id="sidebar">
+    <nav v-if="user" id="sidebar" style="margin-top:100px">
       <div class="sidebar-header">
         <h3>GP Turismo</h3>
       </div>
@@ -269,7 +304,22 @@ a.article:hover {
   min-height: 100vh;
   transition: all 0.3s;
 }
+/* ---------------------------------------------------
+    NAVBAR HOME
+----------------------------------------------------- */
+#navhome {
+    box-shadow: 2px 2px 5px #f00;
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
 
+#demo {
+    margin-top: 70px;
+    margin-bottom: 70px;
+    margin-left: 90px;
+    margin-right: 90px;
+    text-align: center;
+}
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
@@ -284,5 +334,6 @@ a.article:hover {
   #sidebarCollapse span {
     display: none;
   }
+  
 }
 </style>
