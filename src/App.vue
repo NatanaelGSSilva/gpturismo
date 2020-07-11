@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <SideBarMenu :user="user" :excursao_id="excursao_id" />
-
+    <SideBarMenu :user="user" />
   </div>
 </template>
 
@@ -15,17 +14,13 @@ export default {
   },
   data() {
     return {
-      user: null,
-      excursao_id: null
+      user: null
     };
   },
   methods: {
     mudaUser(nome) {
       this.user = nome;
-    },
-    mudaExcursao(id) {
-      this.excursao_id = id;
-    },
+    }
   }
 };
 </script>

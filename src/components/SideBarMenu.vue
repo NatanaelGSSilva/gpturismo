@@ -1,16 +1,16 @@
 <template>
   <div  class="wrapper">
-    <nav id="navhome" class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
+     <nav v-if="!user" id="navhome" class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand " href="#">
-                <img src="gptur.png" alt="Logo GP" width="60"> Grupo GP
-            </a>
+             <a class="navbar-brand " href="#">
+                <img src="gptur.png" alt="Logo GP" width="40"> Grupo GP
+            </a> 
 
             <!-- Toggler/collapsibe Button -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </button> 
 
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
@@ -33,10 +33,13 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> 
 
     <!-- Sidebar  -->
-    <nav v-if="user" id="sidebar" style="margin-top:100px">
+
+
+    <nav v-if="user" id="sidebar" >
+
       <div class="sidebar-header">
         <h3>GP Turismo</h3>
       </div>
@@ -54,9 +57,9 @@
             <li>
               <router-link to="/MenuViagem">Criar Viagens</router-link>
             </li>
-            <li>
+<!--             <li>
               <router-link to="/HistoricoViagem">Histórico das Viagens</router-link>
-            </li>
+            </li> -->
           </ul>
         </li>
         <li>
@@ -68,13 +71,16 @@
           >Configuração Viagens</a>
           <ul class="collapse list-unstyled" id="pageSubmenu">
             <li>
-              <a href="#">Paradas</a>
+              <router-link to="/ConfigParadas" >Paradas</router-link>
             </li>
             <li>
-              <a href="#">Motoristas</a>
+              <router-link to="/InteresseViagem" >Interesses</router-link>
             </li>
             <li>
-              <a href="#">Excursão</a>
+              <router-link to="/ComentariosViagem" >Comentários</router-link>
+            </li>
+            <li>
+              <router-link to="/GraficoExcursoes" >Gráfico</router-link>
             </li>
           </ul>
         </li>
@@ -89,18 +95,17 @@
             <li>
               <a href="#">Alterar Email</a>
             </li>
-            <li>
+<!--             <li>
               <a href="#">Alterar Senha</a>
             </li>
             <li>
               <a href="#">Alterar Algo</a>
-            </li>
+            </li> -->
           </ul>
         </li>
       </ul>
 
       <!-- <ul class="list-unstyled CTAs"> -->
-
       <ul class="list-unstyled components">
         <li>
           <a href="#dropLogin" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -115,6 +120,14 @@
             <li v-if="user">
               <a @click="sair">Logout</a>
             </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="list-unstyled components">
+        <li>
+     
+          <ul class="collapse list-unstyled" id="dropLogin">
+        
           </ul>
         </li>
       </ul>

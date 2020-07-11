@@ -8,7 +8,7 @@ Vue.use(VueAxios, axios)
 
 
 Vue.config.productionTip = false
-Vue.prototype.$MainURL = 'http://127.0.0.1:5000'
+Vue.prototype.$MainURL = 'http://gpturismo.herokuapp.com'
 
 new Vue({
   router,

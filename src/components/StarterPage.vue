@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top:100px">
+  <div >
     <h3>GP Turismo - Página Principal</h3>
   </div>
 </template>

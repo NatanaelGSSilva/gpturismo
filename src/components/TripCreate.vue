@@ -1,5 +1,5 @@
 <template>
-  <div  id="Adicionagem" style="margin-top:100px">
+  <div  id="Adicionagem">
     <div class="card container mt-3" >
       <div class="card-header">
         <div class="row" >
@@ -109,13 +109,15 @@
             </div>
             <div class="form-group">
               <input
-                type="file"
+                type="text"
                 class="form-control"
-                name="imagem"
-                accept="image/png, image/jpeg"
-                placeholder="Imagem Foto"
+                name="foto"
+                v-model="excursao.foto"
+                placeholder="Foto URL"
+                required
               />
             </div>
+
             <div class="form-group">
               <input
                 type="text"
@@ -143,8 +145,9 @@
 export default {
   data() {
     return {
+      numero: this.$route.params.id,
       viagem: {
-        id: null,
+        idViagens: null,
         cidadePartida: null,
         cidadeChegada: null,
         horaPartida: null,
@@ -153,32 +156,109 @@ export default {
         tipoViagem: null
       },
       excursao: {
-        id: null,
+        idExcursoes: null,
         dataPartida: null,
         dataChegada: null,
-        detalheExcursoes: null
+        foto: null,
+        detalheExcursoes: null,
+        idViagens: null
       }
     };
   },
+  mounted() {
+    if (this.$route.params.id >= 0) {
+      this.editarCampos();
+    }
+  },
   methods: {
     salvar() {
-      if (localStorage.getItem("token")) {
+      if (this.viagem.idViagens) {
         this.axios
-          .post(this.$MainURL + "/viagens", this.viagem, {
+          .put(this.$MainURL + "/viagens/" + this.viagem.idViagens, this.viagem)
+          .then(response => {
+            alert(
+              "Viagem de id: " +
+                response.data.idViagens +
+                " alterada com sucesso!"
+            );
+            this.GoBack();
+          });
+
+        if (this.viagem.tipoViagem == 2) {
+          this.axios
+            .put(
+              this.$MainURL + "/excursoes/" + this.excursao.idExcursoes,
+              this.excursao
+            )
+            .then(response => {
+              alert(
+                "Excursão de id: " +
+                  response.data.idExcursoes +
+                  " alterado com sucesso"
+              );
+              this.GoBack();
+            });
+        }
+      } else {
+        if (this.viagem.tipoViagem == 2) {
+          this.axios
+            .post(this.$MainURL + "/viagens", this.viagem, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`
             }
           })
-          .then(response =>
-            alert(`Ok! Viagem cadastrado com código ${response.data.id}`)
-          );
-        this.goBack();
-        this.viagem = {};
-        this.excursao = {};
-      } else {
-        alert("Erro... Usuário deve estar logado para incluir as Viagens");
+            .then(response => {
+              alert(
+                `Ok! Viagem cadastrado com código ${response.data.idViagens}`
+              );
+              this.sal(response.data.idViagens);
+            });
+        } else {
+          this.axios
+            .post(this.$MainURL + "/viagens", this.viagem, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+          })
+            .then(response => {
+              alert(
+                `Ok! Viagem cadastrado com código ${response.data.idViagens}`
+              );
+              this.GoBack();
+            });
+        }
       }
     },
+    sal(id) {
+      setTimeout(() => {
+        this.excursao.idViagens = id;
+        this.axios
+          .post(this.$MainURL + "/excursoes", this.excursao, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+          })
+          .then(this.GoBack());
+      }, 3000);
+    },
+    // -----------------------------------------------------------------------------------
+    editarCampos() {
+      this.axios
+        .get(this.$MainURL + "/viagens/" + this.numero)
+        .then(response => {
+          this.viagem = response.data;
+          if (response.data.tipoViagem == 2) {
+            this.carregaExcursao(response.data.idViagens);
+          }
+        });
+    },
+
+    carregaExcursao(id) {
+      this.axios
+        .get(this.$MainURL + "/excursoes/viagem/" + id)
+        .then(response => (this.excursao = response.data));
+    },
+    // -----------------------------------------------------------------------------------
     GoBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }

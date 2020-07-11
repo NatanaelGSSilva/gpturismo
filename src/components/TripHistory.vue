@@ -1,5 +1,5 @@
 <template>
-  <div id="listagem" style="margin-top:100px">
+  <div id="listagem" >
     <div class="container mt-3">
       <div class="card">
         <h5 class="card-header">Lista de Viagens</h5>
@@ -19,7 +19,7 @@
             </thead>
             <tbody>
               <tr v-for="viagem in viagens" v-bind:key="viagem.id">
-                <td>{{viagem.idViagens}}</td>
+                <td><input type="checkbox" :value="viagem.idViagens" v-model="ids">{{viagem.idViagens}}</td>
                 <td>{{viagem.cidadePartida}}</td>
                 <td>{{viagem.cidadeChegada}}</td>
                 <td>{{viagem.valor}}</td>
@@ -33,6 +33,7 @@
         </div>
       </div>
     </div>
+    {{ids}}
   </div>
 </template>
 
@@ -42,6 +43,7 @@ export default {
   name: "HistoryPage",
   data() {
     return {
+      ids: [],
       viagens: null
     };
   },
