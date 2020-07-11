@@ -8,7 +8,8 @@ import TripCreate from './components/TripCreate.vue'
 import TripHistory from './components/TripHistory.vue'
 import TripPoint from './components/TripPoint.vue'
 import Home from './components/Home.vue'
-import Excursao from './components/Excursao.vue'
+import Interesse from './components/Interesse.vue'
+
 
 
 Vue.use(VueRouter)
@@ -31,7 +32,8 @@ export default new VueRouter({
 
         { path: '/HistoricoViagem', name: 'HistoricoViagem', component: TripHistory },
         { path: '/Home', name: 'Home', component: Home },
-        { path: '/Excursao/:id', name: 'Excursao', component: Excursao },
+        { path: '/Interesse', name: 'Home', component: Interesse },
+
 
 
     ]

@@ -29,12 +29,9 @@
 
             
         <div class="row">
-            
-
-            <div class="container-fluid" style="text-align: center; margin-top: 80px;">
-                <h2>Veja nossas Excursões</h2>
-            <div id="turismo" class="container mx-auto" v-for="excursao in excursoes"  v-bind:key="excursao.id" style="margin-top:30px ">
-                <img @click.prevent="seleciona(excursao.idExcursoes)" :src="excursao.foto" class="mx-2 my-2 float-left" width="260" height="180">  
+            <div class="container-fluid">
+            <div id="turismo" class="container mx-auto" v-for="excursao in excursoes"  v-bind:key="excursao.id" style="margin-top:80px ">
+                <img @click.prevent="seleciona(excursao.id)" :src="excursao.foto" class="mx-2 my-2 float-left" width="304" height="236">  
             </div>
             </div>
         </div>
@@ -97,6 +94,9 @@
 <script>
 import axios from 'axios'
 export default {
+    props: {
+        excursao_id: String
+  },
   data() {
     return {
       viagens: null,
@@ -114,8 +114,10 @@ export default {
     axios.get(this.$MainURL +"/excursoes")
         .then(response => (this.excursoes = response.data));
     },
-  seleciona(idEx) {
-        this.$router.push({name: "Excursao", params:{id: idEx}})
+    
+    seleciona(id) {
+        this.$router.push('/Interesse'+ id)
+
     }
     
     },
